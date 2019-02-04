@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 
 
 namespace Tarea_1
@@ -19,10 +19,21 @@ namespace Tarea_1
         private Backend log = data  => Console.WriteLine(data);
         private Backend error = data => Console.WriteLine("Error: {0}", data);
 
+        private List<string> registryData;
+        private StreamWriter registry;
+
 
         public Form1()
         {
             InitializeComponent();
+            registryData = new List<string>();
+            // registry = File.AppendText(@".reg");
+
+            for (int index = 0; index < Controls.Count; index++)
+            {
+                if (Controls[index].GetType().Name != "Button")
+                Controls[index].Click += new System.EventHandler(this.OnEdit);
+            }
         }
 
         private void OnClickSend(object sender, EventArgs args)
@@ -48,8 +59,11 @@ namespace Tarea_1
                     }
                     break;
                 }
-                
-                if (!ok) OnError(control);
+
+                if (!ok){
+                    error($"from control {control.Name}");
+                    OnError(control);
+                }
             }
 
 
@@ -61,16 +75,28 @@ namespace Tarea_1
 
         private void OnClickReset(object sender, EventArgs args)
         {
-
+            Form1 resetedForm = new Form1();
+            resetedForm.Show();
+            this.Dispose(false);
         }
 
-        private void OnError(Control control) => control.ForeColor = Color.Red;
+        private void OnError(Control control) => control.BackColor = Color.Red;
+        private void OnEdit(object sender, EventArgs args) => ((Control)sender).BackColor = Color.White;
 
         private bool ComboBoxHandler(ComboBox cboItem)
         {
-            log(cboItem.Text);
+            log(cboItem.Name);
+            bool text = false;
 
-            return true;
+            foreach (string item in cboItem.Items)
+                if( text = item.Equals(cboItem.Text))
+                {
+                    registryData.Add(cboItem.Text);
+                    break;
+                }
+            
+
+            return text;
         }
     }
 }
