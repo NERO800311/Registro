@@ -7,7 +7,9 @@ namespace Tarea_1
         private Dictionary<string, string> items;
         private List<string> xx;
 
-        public DataHandler()
+        public static DataHandler instance = new DataHandler();
+
+        private DataHandler()
         {
             items = new Dictionary<string, string>();
         }
@@ -17,7 +19,7 @@ namespace Tarea_1
 
         }
 
-        public void Eval(string expression)
+        public void ToStream(string key, string data)
         {
 
         }
