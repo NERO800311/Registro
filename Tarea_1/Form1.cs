@@ -1,33 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
-
+using Tarea_1;
 
 namespace Tarea_1
 {
-    public delegate void Backend (object data);
     public partial class Form1 : Form
     {
         
-        
-        private List<string> registryData;
-        private StreamWriter registry;
+        private DataHandler registry;
         private ControlHandler controlHandler;
 
 
         public Form1()
         {
             InitializeComponent();
-            registryData = new List<string>();
-            // registry = File.AppendText(@".reg");
+            registry = new DataHandler();
             controlHandler = new ControlHandler();
 
             for (int index = 0; index < Controls.Count; index++)
@@ -82,10 +75,6 @@ namespace Tarea_1
         }
 
         private void OnClickClose(object sender, EventArgs args){
-            foreach (string item in registryData)
-            {
-                Utils.log(item);
-            }
             this.Close();
         } //=> this.Close();
 
@@ -96,8 +85,10 @@ namespace Tarea_1
             Utils.log(type);
                 if(type != "Button" && type != "Label")
                 {
-                    control.Text = controlHandler[control.Name];
-                    control.BackColor = Color.White;
+                    Control tmpControl = controlHandler[control.Name];
+
+                    control.BackColor = tmpControl.BackColor;
+                    control.Text = tmpControl.Text;
                 }
             }
         }
@@ -113,7 +104,7 @@ namespace Tarea_1
                 if( text = item.Equals(cboItem.Text))
                 {
                     Utils.log(cboItem.Name + ": " +cboItem.Text);
-                    registryData.Add(cboItem.Name + ": " +cboItem.Text);
+                    registry.Add(cboItem.Name + ": " +cboItem.Text);
                     break;
                 }
             
@@ -130,7 +121,7 @@ namespace Tarea_1
         {
             DateTime dateTime = dateTimePicker.Value.Date;
             TimeSpan timeSpan = DateTime.Now - dateTime;
-            registryData.Add($"{dateTimePicker.Name}: Value = {timeSpan.ToString()} ");
+            registry.Add($"{dateTimePicker.Name}: Value = {timeSpan.ToString()} ");
             Utils.log(timeSpan.ToString());
             return true;
         }
@@ -141,7 +132,7 @@ namespace Tarea_1
 
             if (string.IsNullOrEmpty(text)) return false;
 
-            registryData.Add($"{textBox.Name}: {text}");
+            registry.Add($"{textBox.Name}: {text}");
             return true;
         }
 
@@ -158,64 +149,13 @@ namespace Tarea_1
                 CultureInfo.InvariantCulture,
                 DateTimeStyles.AssumeUniversal,
                 out date        
-            ))
+            )){
                 Utils.error(text + " is invalid date");
+                return false;
+            }
             
-            registryData.Add($"{maskedTextBox.Name}: {text}");
+            registry.Add($"{maskedTextBox.Name}: {text}");
             return true;
         }
-    }
-
-    public class ControlHandler
-    {
-        private Dictionary<string , string> textList;
-        public ControlHandler(){ textList = new Dictionary<string, string>();}
-
-        public void Add(Control ctrl) => textList.Add(ctrl.Name, ctrl.Text);
-
-        public string this[string index]
-        {
-            get { return textList[index]; }
-        }
-    }
-
-    public class FileHandler
-    {
-        private StreamReader loader;
-        private StreamWriter saver;
-        public FileHandler()
-        {
-            // loader = File.OpenRead("");
-        }
-
-        
-    }
-
-    public class DataHandler
-    {
-        private Dictionary<string, string> items;
-        private List<string> xx;
-
-        public DataHandler()
-        {
-            items = new Dictionary<string, string>();
-        }
-
-        public void Add(string data)
-        {
-
-        }
-
-        public void Eval(string expression)
-        {
-
-        }
-    }
-
-    public class Utils
-    {
-        public static Backend log = data  => Console.WriteLine(data);
-        public static Backend error = data => Console.WriteLine("Error: {0}", data);
-
     }
 }

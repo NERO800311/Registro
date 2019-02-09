@@ -35,7 +35,7 @@
             this.mtxName = new System.Windows.Forms.MaskedTextBox();
             this.cboSex = new System.Windows.Forms.ComboBox();
             this.cboStatus = new System.Windows.Forms.ComboBox();
-            this.dtpBirth = new System.Windows.Forms.DateTimePicker();
+            this.mtxBirth = new System.Windows.Forms.MaskedTextBox();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.mtxMail = new System.Windows.Forms.MaskedTextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,7 +44,7 @@
             this.mtxNit = new System.Windows.Forms.MaskedTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cboAppoinment = new System.Windows.Forms.ComboBox();
-            this.dtpContractDate = new System.Windows.Forms.DateTimePicker();
+            this.mtxContractDate = new System.Windows.Forms.MaskedTextBox();
             this.cboDepartament = new System.Windows.Forms.ComboBox();
             this.mtxPointment = new System.Windows.Forms.MaskedTextBox();
             this.mtxSalary = new System.Windows.Forms.MaskedTextBox();
@@ -158,13 +158,6 @@
 
 
             // 
-            // maskedTextBox1
-            // 
-            this.mtxName.Location = new System.Drawing.Point(103, 12);
-            this.mtxName.Name = "maskedTextBox1";
-            this.mtxName.Size = new System.Drawing.Size(100, 20);
-            this.mtxName.TabIndex = 4;
-            // 
             // comboBox1
             // 
             this.cboSex.FormattingEnabled = true;
@@ -202,6 +195,14 @@
             this.txtAddress.Name = "textBox1";
             this.txtAddress.Size = new System.Drawing.Size(241, 20);
             this.txtAddress.TabIndex = 8;
+            
+            // 
+            // maskedTextBox1
+            // 
+            this.mtxName.Location = new System.Drawing.Point(103, 12);
+            this.mtxName.Name = "maskedTextBox1";
+            this.mtxName.Size = new System.Drawing.Size(100, 20);
+            this.mtxName.TabIndex = 4;
             // 
             // maskedTextBox2
             // 
@@ -227,10 +228,18 @@
             // 
             // dateTimePicker2
             // 
-            this.dtpContractDate.Location = new System.Drawing.Point(103, 271);
-            this.dtpContractDate.Name = "dateTimePicker2";
-            this.dtpContractDate.Size = new System.Drawing.Size(200, 20);
-            this.dtpContractDate.TabIndex = 17;
+            this.mtxContractDate.Location = new System.Drawing.Point(103, 271);
+            this.mtxContractDate.Name = "Contract date";
+            this.mtxContractDate.Size = new System.Drawing.Size(200, 20);
+            this.mtxContractDate.TabIndex = 17;
+            this.Text = "Ingrese su fecha de contratacion";
+            this.mtxContractDate.Mask = "00/00/0000";
+            //
+            this.mtxBirth.Location = new System.Drawing.Point(103, 51);
+            this.mtxBirth.Name = "Birth";
+            this.mtxBirth.Size = new System.Drawing.Size(200, 20);
+            this.mtxBirth.TabIndex = 17;
+            this.mtxBirth.Mask = "000000";
             // 
             // comboBox4
             // 
@@ -250,9 +259,12 @@
             // maskedTextBox6
             // 
             this.mtxSalary.Location = new System.Drawing.Point(380, 316);
-            this.mtxSalary.Name = "maskedTextBox6";
+            this.mtxSalary.Name = "Salary";
             this.mtxSalary.Size = new System.Drawing.Size(100, 20);
             this.mtxSalary.TabIndex = 20;
+            this.mtxSalary.MaxLength = 5;
+            this.mtxSalary.BeepOnError = true;
+            this.mtxSalary.Validating += new System.ComponentModel.CancelEventHandler(this.MaskedTextBoxValidating);
 
             // 
             // button1
@@ -320,8 +332,8 @@
             this.Controls.Add(this.cboSex);
             this.Controls.Add(this.cboAppoinment);
 
-            this.Controls.Add(this.dtpContractDate);
-            this.Controls.Add(this.dtpBirth);
+            this.Controls.Add(this.mtxContractDate);
+            this.Controls.Add(this.mtxBirth);
             
             this.Name = "Form1";
             this.Text = "Form";
@@ -344,15 +356,14 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         //
-        private System.Windows.Forms.DateTimePicker dtpContractDate;
-        private System.Windows.Forms.DateTimePicker dtpBirth;
-        //
+        private System.Windows.Forms.MaskedTextBox mtxContractDate;
         private System.Windows.Forms.MaskedTextBox mtxMail;
         private System.Windows.Forms.MaskedTextBox mtxDui;
         private System.Windows.Forms.MaskedTextBox mtxNit;
         private System.Windows.Forms.MaskedTextBox mtxName;
         private System.Windows.Forms.MaskedTextBox mtxPointment;
         private System.Windows.Forms.MaskedTextBox mtxSalary;
+        private System.Windows.Forms.MaskedTextBox mtxBirth;
         //
         private System.Windows.Forms.ComboBox cboAppoinment;
         private System.Windows.Forms.ComboBox cboDepartament;
