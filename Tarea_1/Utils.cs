@@ -4,6 +4,7 @@ using System.IO;
 namespace Tarea_1
 {
     public delegate void Backend (object data);
+    public delegate void Events (object sender, EventArgs args);
     public class Utils
     {
         public static Backend log = data  => Console.WriteLine(data);

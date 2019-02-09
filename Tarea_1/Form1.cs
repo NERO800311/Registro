@@ -20,8 +20,8 @@ namespace Tarea_1
         public Form1()
         {
             InitializeComponent();
-            registry = new DataHandler();
-            controlHandler = new ControlHandler();
+            registry = DataHandler.instance;
+            controlHandler = ControlHandler.instance;
 
             for (int index = 0; index < Controls.Count; index++)
             {
@@ -36,47 +36,10 @@ namespace Tarea_1
 
         private void OnClickSend(object sender, EventArgs args)
         {
-            bool ok = true;
-
-            foreach (Control control in Controls)
-            {
-                string name = control.GetType().Name;
-
-                if (name == "Label" || name == "Button") continue;
-                Utils.log(name);
-
-                switch(name)
-                {
-                    case "DateTimePicker": ok = DateTimePickerHandler((DateTimePicker)control);
-                    break;
-
-                    case "ComboBox": ok = ComboBoxHandler((ComboBox)control);
-                    break;
-
-                    case "TextBox": ok = TextBoxHandler((TextBox)control);
-                    break;
-
-                    case "MaskedTextBox": ok = MaskedTextBoxHandler((MaskedTextBox)control);
-                    break;
-
-                    default:
-                    {
-                        Utils.error($"control {control.Name} instance of {name} no has been configurated");
-                    }
-                    break;
-                }
-
-                if (!ok){
-                    Utils.error($"from control {control.Name}");
-                    OnError(control);
-                    // MessageBox.Show($"{control.Name}");
-                }
-            }
+           
         }
 
-        private void OnClickClose(object sender, EventArgs args){
-            this.Close();
-        } //=> this.Close();
+        private void OnClickClose(object sender, EventArgs args) => this.Close();
 
         private void OnClickReset(object sender, EventArgs args)
         {
@@ -93,8 +56,8 @@ namespace Tarea_1
             }
         }
 
-        private void OnError(Control control) => control.BackColor = Color.Red;
-        private void OnEdit(object sender, EventArgs args) => ((Control)sender).BackColor = Color.White;
+        
+        private Events OnEdit = (sender, args) => ((Control)sender).BackColor = Color.White;
 
         private bool ComboBoxHandler(ComboBox cboItem)
         {
