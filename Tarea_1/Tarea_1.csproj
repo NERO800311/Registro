@@ -75,6 +75,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Utils.cs" />
+    <Compile Include="ControlHandler.cs" />
+    <Compile Include="DataHandler.cs" />
+    <Compile Include="FileHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -14,9 +14,13 @@ namespace Tarea_1
         [STAThread]
         static void Main()
         {
+            Form1 form = new Form1();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(form);
+
+            form = null;
+
         }
     }
 }
